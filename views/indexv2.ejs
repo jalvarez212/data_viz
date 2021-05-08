@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>NYC Population Data</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script src="/js/data.js"></script>
+    <style>
+      body {background-size: cover;}
+      #viewBox 
+      {width: 100%}
+      svg 
+      {width: 100%}
+    </style> 
+  </head>
+  <body>
+    <h1>NYC Population Data:</h1>
+    <p> 2010 - 2019</p>
+    <br>
+    <br>
+    <div id="viewBox"></div>
+    <script type="text/javascript">
+const width = 960;
+const height = 500;
+const margin = 5;
+const padding = 5;
+const adj = 30;
+// we are appending SVG first
+const svg = d3.select("#viewBox").append("svg")
+    .attr("preserveAspectRatio", "xMinYMin meet")
+    .attr("viewBox", "-"
+          + adj + " -"
+          + adj + " "
+          + (width + adj *3) + " "
+          + (height + adj*3))
+    .style("padding", padding)
+    .style("margin", margin)
+    .classed("svg-content", true);
+
+
+//----------------------------SCALES----------------------------//
+const xScale = d3.scaleLinear().range([0,width]).domain([2010,2019]);
+const yScale = d3.scaleLinear().rangeRound([height, 0]).domain([8100000,8500000]);
+
+
+//-----------------------------AXES-----------------------------//
+formatValue = d3.format(".3s");
+const yaxis = d3.axisLeft()
+    .scale(yScale)
+    .tickFormat(function(d) { return formatValue(d)});
+
+
+const xaxis = d3.axisBottom()
+   
+    .scale(xScale)
+    .tickFormat(d3.format("d"));
+
+//-----------------------------AXES-----------------------------//
+svg.append("g")
+    .attr("class", "axis")
+    .attr("transform", "translate(0," + height + ")")
+    .call(xaxis);
+
+svg.append("g")
+    .attr("class", "axis")
+    .call(yaxis)
+    .append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("dy", ".75em")
+    .attr("y", 6)
+    .style("text-anchor", "end")
+    .text("Frequency");
+
+//----------------------------LINES-----------------------------//
+line = d3.line().curve(d3.curveStep)([
+		[xScale(2010), yScale(8190209)], 
+		[xScale(2011), yScale(8272948)], 
+		[xScale(2012), yScale(8346693)], 
+		[xScale(2013), yScale(8396091)], 
+		[xScale(2014), yScale(8433806)], 
+		[xScale(2015), yScale(8463049)], 
+		[xScale(2016), yScale(8469153)],
+		[xScale(2017), yScale(8437478)], 
+		[xScale(2018), yScale(8390081)],
+		[xScale(2019), yScale(8336817)] 
+
+	]);
+
+
+d3.select('svg')
+.append('path')
+
+.attr('d',line)
+.style('fill','none')
+.style('stroke', 'black')
+
+
+
+
+
+		  
+    </script>
+
+  </body>
+</html>
