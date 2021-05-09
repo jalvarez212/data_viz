@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>NYC Population Data</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script src="/js/data.js"></script>
+    <style>
+      body {background-size: cover;}
+      #viewBox 
+      {width: 100%}
+      svg 
+      {width: 100%}
+    </style> 
+  </head>
+  <body>
+    <h1>NYC Population Data:</h1>
+    <p> 2010 - 2019</p>
+    <br>
+    <br>
+    <div id="viewBox"></div>
+    <script type="text/javascript">
+// set the dimensions and margins of the graph
+var margin = {top: 10, right: 30, bottom: 30, left: 60},
+    width = 460 - margin.left - margin.right,
+    height = 400 - margin.top - margin.bottom;
+
+// append the svg object to the body of the page
+var svg = d3.select("#viewBox")
+  .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
+
+//----------------------------LINES-----------------------------//
+//Read the data
+var a = [];
+d3.csv("/js/data.csv",
+
+  // When reading the csv, I must format variables:
+  function(d){
+  	console.log(d);
+  	
+  	a.push(d);
+    
+  },
+
+
+
+
+  // Now I can use this dataset:
+
+
+)
+
+
+
+
+
+		  
+    </script>
+
+  </body>
+</html>

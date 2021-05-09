@@ -13,4 +13,8 @@ router.get('/indexv1', function(req, res, next) {
 router.get('/indexv2', function(req, res, next) {
   res.render('indexv2', { title: 'Express' });
 });
+
+router.get('/cvs', function(req, res, next) {
+  res.render('cvs', { title: 'Express' });
+});
 module.exports = router;
