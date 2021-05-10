@@ -16,10 +16,25 @@
   <body>
     <h1>NYC Population Data:</h1>
     <p> 2010 - 2019</p>
+    <select id="Selector"></select>
     <br>
     <br>
     <div id="viewBox"></div>
     <script type="text/javascript">
+
+ //define function to format data into html
+ function dataFormat(arr){
+ 	
+ 	arr.forEach(function(r){
+ 		var opt = document.createElement("option");
+ 		opt.text = r['Area'];
+		opt.value = r['Area'];
+ 		var e = document.getElementById('Selector');
+ 		e.appendChild(opt)
+ 		
+	 	})
+
+ }
 // set the dimensions and margins of the graph
 var margin = {top: 10, right: 30, bottom: 30, left: 60},
     width = 460 - margin.left - margin.right,
@@ -34,6 +49,39 @@ var svg = d3.select("#viewBox")
     .attr("transform",
           "translate(" + margin.left + "," + margin.top + ")");
 
+//----------------------------SCALES----------------------------//
+const xScale = d3.scaleLinear().range([0,width]).domain([2010,2019]);
+const yScale = d3.scaleLinear().rangeRound([height, 0]).domain([8100000,8500000]);
+
+
+//-----------------------------AXES-----------------------------//
+formatValue = d3.format(".3s");
+const yaxis = d3.axisLeft()
+    .scale(yScale)
+    .tickFormat(function(d) { return formatValue(d)});
+
+
+const xaxis = d3.axisBottom()
+   
+    .scale(xScale)
+    .tickFormat(d3.format("d"));
+
+//-----------------------------AXES-----------------------------//
+svg.append("g")
+    .attr("class", "axis")
+    .attr("transform", "translate(0," + height + ")")
+    .call(xaxis);
+
+svg.append("g")
+    .attr("class", "axis")
+    .call(yaxis)
+    .append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("dy", ".75em")
+    .attr("y", 6)
+    .style("text-anchor", "end")
+    .text("Frequency");
+
 //----------------------------LINES-----------------------------//
 //Read the data
 var a = [];
@@ -41,11 +89,10 @@ d3.csv("/js/data.csv",
 
   // When reading the csv, I must format variables:
   function(d){
-  	console.log(d);
-  	
   	a.push(d);
-    
+  
   },
+
 
 
 
@@ -56,7 +103,7 @@ d3.csv("/js/data.csv",
 )
 
 
-
+setTimeout(function(){dataFormat(a)}, 2000);
 
 
 		  
